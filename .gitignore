@@ -1,0 +1,22 @@
+# Credentials & secrets
+client_secret_*.json
+\#*#
+
+# Personal media
+NateILoveYouDaddy.m4a
+
+# Generated / server-side content
+photos/
+vendor/
+fonts/
+
+# One-time dev tools
+get_refresh_token.php
+
+# Working documents
+GoogleCleanUp.md
+ChangesMadeForNewPicturesPage.md
+NewFunctionalDesignForPictures.md
+VideoLoadingAffordance.md
+PHOTO_BACKEND_IMPLEMENTATION.md
+ImprovedLayoutChanges.md

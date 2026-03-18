@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="-5 -5 110 110" version="1.1">
+  <path d="M 0 0 L 99 0 M 0 15 L 100 15 M 0 84 L 100 84 M 0 99 L 99 99" fill="none" stroke="#eeeeee" stroke-width="3" />
+
+  <path d="M 0 24 L 14 24 L 14 74 L 0 74" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="24" y="24" width="50" height="50" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <path d="M 99 24 L 85 24 L 85 74 L 99 74" fill="none" stroke="#eeeeee" stroke-width="3" />
+
+  <rect x="2" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="12" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="22" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="32" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="42" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="52" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="62" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="72" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="82" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="92" y="5" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="2" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="12" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="22" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="32" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="42" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="52" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="62" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="72" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="82" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  <rect x="92" y="89" width="5" height="5" fill="none" stroke="#eeeeee" stroke-width="3" />
+  
+</svg>

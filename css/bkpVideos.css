@@ -1,0 +1,157 @@
+/* Video page styles */
+
+.video_picker {
+    display: inline-block;
+    width: 18%;
+    margin-right: 2%;
+    margin-bottom: 10px;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.video_picker img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 2px solid #1100aa;
+}
+
+.video_picker img:hover {
+    border-color: #ff8800;
+}
+
+#videopicker {
+    margin-bottom: 10px;
+}
+
+#pagepicker {
+    margin-bottom: 10px;
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+}
+
+#pagepicker a {
+    color: #1100aa;
+    text-decoration: none;
+    margin-right: 4px;
+}
+
+#pagepicker a:hover {
+    color: #ff8800;
+}
+
+.title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5em;
+    color: #1100aa;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1em;
+    color: #333333;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.player {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.player iframe {
+    border: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-width: 1280px;
+}
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+@media only screen and (max-width: 600px) {
+
+    .video_picker {
+        margin-bottom: 4px;
+    }
+
+}
+
+/* ── Skeleton loading state ─────────────────────────────────────── */
+
+/* Real content starts invisible; transition fires when .fadeIn is added */
+.videosContent .title,
+.videosContent .player,
+.videosContent .description,
+.videosContent .picker {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.videosContent .title.fadeIn,
+.videosContent .player.fadeIn,
+.videosContent .description.fadeIn,
+.videosContent .picker.fadeIn {
+    opacity: 1;
+}
+
+/* Shimmer animation */
+@keyframes skeletonShimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Shared skeleton style */
+.skeletonBar,
+.skeletonBox,
+.skeletonThumb {
+    background: linear-gradient(90deg, #e4e4e4 25%, #d0d0d0 50%, #e4e4e4 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite linear;
+    border-radius: 3px;
+}
+
+/* Title skeleton — narrow bar */
+.skeletonTitle {
+    height: 1.5em;
+    width: 55%;
+    margin-bottom: 10px;
+}
+
+/* Player skeleton — sized to match getPlayerSize() breakpoints */
+.skeletonPlayer {
+    width: 320px;
+    height: 240px;
+    margin: 0 auto 10px;
+}
+@media (min-width: 1024px) {
+    .skeletonPlayer { width: 600px; height: 450px; }
+}
+@media (min-width: 1200px) {
+    .skeletonPlayer { width: 800px; height: 600px; }
+}
+@media (min-width: 2000px) {
+    .skeletonPlayer { width: 1280px; height: 720px; }
+}
+
+/* Description skeleton — two lines */
+.skeletonDesc { margin-bottom: 10px; }
+.skeletonDesc .skeletonBar        { height: 0.9em; width: 90%; margin-bottom: 6px; }
+.skeletonDesc .skeletonBarShort   { height: 0.9em; width: 60%; }
+
+/* Picker skeleton — 5 thumbnail placeholders in a row */
+/* font-size: 0 collapses whitespace between inline-block children */
+.skeletonPickerUI { margin-top: 6px; font-size: 0; }
+.skeletonThumb {
+    display: inline-block;
+    width: 18%;
+    margin-right: 2%;
+    padding-bottom: 13.5%; /* ~3:4 aspect ratio matching typical Vimeo thumbnails */
+    vertical-align: top;
+}
+.skeletonPickerUI .skeletonThumb:last-child {
+    margin-right: 0;
+}

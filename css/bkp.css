@@ -1,0 +1,684 @@
+/* ==========================================================================
+   Self-hosted fonts (replace Google Fonts CDN)
+   Font files go in ../fonts/ directory.
+   Download Raleway from: https://github.com/impallari/Raleway
+   Download Oswald from:  https://github.com/googlefonts/OswaldFont
+   ========================================================================== */
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Regular.woff2') format('woff2'),
+         url('../fonts/Raleway-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('../fonts/Oswald-Light.woff2') format('woff2'),
+         url('../fonts/Oswald-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   Basic styling / Small desktop / Tablet (portrait)
+   ========================================================================== */
+@media only screen {
+
+    header {
+        width:600px;
+        height:100px;
+        background-color:#ffffff;
+        text-align:left;
+        text-shadow: 1px 1px #ccccdd;
+        line-height:100px;
+        font-family: 'Raleway', sans-serif;
+        font-size: 3em;
+        color:#1100aa;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    header a {
+        color:#1100aa;
+        text-decoration: none;
+    }
+
+    header a:visited {
+        color:#1100aa;
+    }
+
+    header a:hover {
+        color:#1100aa;
+    }
+
+    footer {
+        width:600px;
+        height:100px;
+        background-color:#ffffff;
+        line-height:100px;
+        font-family: "Times New Roman", Times, serif;
+        font-size:.8em;
+        color:#1100aa;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .buttonContainer {
+        width:100%;
+        height:50px;
+    }
+
+    .buttonContainer a {
+        text-decoration: none;
+    }
+
+    .button {
+        width:25%;
+        height:50px;
+        margin-bottom:50px;
+        background-image:linear-gradient(to bottom, #1100aa, #110066),linear-gradient(to bottom, #1100aa, #110066);
+        text-align:center;
+        line-height:50px;
+        font-size:1.5em;
+        display:block;
+        float:left;
+        font-family: 'Oswald', sans-serif;
+        background-position:center, center;
+        background-repeat:no-repeat;
+        background-size:100%,100%;
+        color:rgba(255,255,255,255);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .button:hover {
+        width:25%;
+        height:50px;
+        background-color:#ff8800;
+        text-align:center;
+        line-height:50px;
+        font-size:1.5em;
+        color:#ffffff;
+        background-image:none;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    .tileContainer {
+        width:600px;
+        height:600px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .tileContainer a {
+        text-decoration: none;
+    }
+
+    .tile {
+        margin:25px;
+        width:250px;
+        height:250px;
+        background-color:#1100aa;
+        background-position:center, center;
+        background-repeat:no-repeat;
+        background-size: 75%,100%;
+        text-align:center;
+        line-height:250px;
+        font-size:2em;
+        color:rgba(255,255,255,0);
+        display:block;
+        float:left;
+        font-family: 'Oswald', sans-serif;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .tile:hover {
+        margin:25px;
+        width:250px;
+        height:250px;
+        background-color:#ff8800;
+        text-align:center;
+        line-height:250px;
+        font-size:2em;
+        color:#ffffff;
+        background-image:none;
+    }
+
+    .picturesTile {
+        background-image:url('camera.svg'),linear-gradient(to bottom, #1100aa, #110066);
+    }
+
+    .picturesTile:hover {
+        background-image:none;
+    }
+
+    .milestonesTile {
+        background-image:url('steps.svg'),linear-gradient(to bottom, #1100aa, #110066);
+    }
+
+    .milestonesTile:hover {
+        background-image:none;
+    }
+
+    .suggestionsTile {
+        background-image:url('mail.svg'),linear-gradient(to bottom, #1100aa, #110066);
+    }
+
+    .suggestionsTile:hover {
+        background-image:none;
+    }
+
+    .videosTile {
+        background-image:url('film.svg'),linear-gradient(to bottom, #1100aa, #110066);
+        background-size: 75%,100%;
+    }
+
+    .videosTile:hover {
+        background-image:none;
+    }
+
+    .decoration {
+        display:none;
+    }
+
+    .decorationImage {
+        width:180px;
+        height:180px;
+        filter: saturate(0.5) brightness(1.05);
+        opacity: 0.8;
+    }
+
+    .picturesContent {
+        width:600px;
+        margin-bottom:50px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .milestonesContent {
+        width:550px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-bottom:50px;
+    }
+
+    .suggestionsContent {
+        width:550px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-bottom:50px;
+    }
+
+    .videosContent {
+        width:600px;
+        margin-bottom:50px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .milestoneCell {
+        padding-left:10px;
+    }
+
+    .navigator {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .navigator > a {
+        color:#1100aa;
+    }
+
+    .navigator > a:hover {
+        color:#ff8800;
+    }
+
+    .selectedpage {
+        color:#ff8800;
+    }
+
+    .selectedbutton {
+        background-image:linear-gradient(to bottom, #ff8800, #ff8800),linear-gradient(to bottom, #ff8800, #ff8800);
+    }
+
+    a:hover {
+        color:#ff8800;
+    }
+
+    #from {
+        width:200px;
+    }
+
+    .hello {
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.4em;
+        color: #1100aa;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        clear: both;
+    }
+
+    .album-cover-btn:focus-visible,
+    .album-back-btn:focus-visible {
+        outline: 3px solid #ff8800;
+        outline-offset: 3px;
+    }
+
+}
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+@media only screen
+and (max-width:600px) {
+    
+    body {
+        overflow-x:hidden;
+    }
+
+    header {
+        width:95%;
+        height:50px;
+        text-align:left;
+        line-height:50px;
+        font-size:2em;
+        margin-top:25px;
+        margin-left:2.5%;
+    }
+
+    footer {
+        width:95%;
+        height:100px;
+        background-color:#ffffff;
+        line-height:100px;
+        font-size:.8em;
+        margin-left:2.5%;
+    }
+
+    .tileContainer {
+        width:320px;
+        height:320px;
+        margin-bottom:25px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .tile {
+        margin:10px;
+        width:140px;
+        height:140px;
+        line-height:140px;
+        font-size:1.5em;
+    }
+
+    .tile:hover {
+        margin:10px;
+        width:140px;
+        height:140px;
+        line-height:140px;
+        font-size:1.5em;
+    }
+
+    .buttonContainer {
+        overflow:hidden;
+    }
+
+    .button {
+        margin-bottom:0px;
+        color:rgba(255,255,255,0);
+        background-size:50px,100%;
+    }
+
+    .button:hover {
+        font-size:1em;
+    }
+
+    .picturesButton:not(.selectedbutton) {
+        background-image:url('camera.svg'),linear-gradient(to bottom, #1100aa, #110066);
+    }
+
+    .picturesButton {
+        background-image:url('camera.svg'),linear-gradient(to bottom, #ff8800, #ff8800);
+    }
+
+    .milestonesButton:not(.selectedbutton) {
+        background-image:url('steps.svg'),linear-gradient(to bottom, #1100aa, #110066);
+    }
+
+    .milestonesButton {
+        background-image:url('steps.svg'),linear-gradient(to bottom, #ff8800, #ff8800);
+    }
+
+    .suggestionsButton:not(.selectedbutton) {
+        background-image:url('mail.svg'),linear-gradient(to bottom, #1100aa, #110066);
+    }
+
+    .suggestionsButton {
+        background-image:url('mail.svg'),linear-gradient(to bottom, #ff8800, #ff8800);
+    }
+
+    .videosButton:not(.selectedbutton) {
+        background-image:url('film.svg'),linear-gradient(to bottom, #1100aa, #110066);
+    }
+
+    .videosButton {
+        background-image:url('film.svg'),linear-gradient(to bottom, #ff8800, #ff8800);
+    }
+
+    .button:not(.selectedbutton):hover {
+        background-image:linear-gradient(to bottom, #ff8800, #ff8800),linear-gradient(to bottom, #ff8800, #ff8800);
+    }
+
+    #content {
+        margin-top:25px;
+    }
+
+    .picturesContent {
+        width:95%;
+        padding-left:2.5%;
+        margin-bottom:50px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .milestonesContent {
+        width:95%;
+        padding-left:2.5%;
+        margin-bottom:50px;
+    }
+
+    .suggestionsContent {
+        width:95%;
+        padding-left:2.5%;
+        margin-bottom:50px;
+    }
+
+    .videosContent {
+        width:95%;
+        margin-bottom:50px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    #suggestionsinput {
+        width:95%;
+    }
+
+}
+
+/* ==========================================================================
+   Medium desktop / Tablet (landscape)
+   ========================================================================== */
+@media only screen 
+and (min-width : 1024px) {
+
+    body {
+        margin-left:calc(50vw - 185px);
+        margin-right:calc(50vw - 415px);
+    }
+
+    header {
+        width:600px;
+        height:200px;
+        text-align:center;
+        line-height:200px;
+        font-size:4em;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .buttonContainer {
+        width:600px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .button {
+        width:150px;
+        margin-bottom:50px;
+    }
+
+    .button:hover {
+        width:150px;
+    }
+
+    .tileContainer {
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .decoration {
+        width:180px;
+        height:100vh;
+        overflow:hidden;
+        background-color:#eeeeff;
+        position:fixed;
+        left:calc(50vw - 415px);
+        top:0px;
+        display:inline;
+    }
+
+    .picturesContent {
+        width:600px;
+        padding-top:25px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .milestonesContent {
+        width:600px;
+        padding-top:25px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .suggestionsContent {
+        width:600px;
+        padding-top:25px;
+        padding-left:0px;
+        padding-bottom:25px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .videosContent {
+        width:600px;
+        padding-top:25px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
+
+/* ==========================================================================
+   Large desktop
+   ========================================================================== */
+@media only screen
+and (min-width : 1200px) {
+
+    body {
+        margin-left:calc(50vw - 285px);
+        margin-right:calc(50vw - 515px);
+    }
+
+    .decoration {
+        left:calc(50vw - 515px);
+    }
+
+    header {
+        width:800px;
+    }
+
+    .buttonContainer {
+        width:800px;
+    }
+
+    .button {
+        width:200px;
+        margin-bottom:50px;
+    }
+
+    .button:hover {
+        width:200px;
+    }
+
+    .tileContainer {
+        width:600px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .picturesContent {
+        width:800px;
+        padding-top:25px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .milestonesContent {
+        width:800px;
+        padding-top:25px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .suggestionsContent {
+        width:800px;
+        padding-top:25px;
+        padding-left:0px;
+        padding-bottom:25px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .videosContent {
+        width:800px;
+        padding-top:25px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
+
+/* ==========================================================================
+   Extra-large desktop (max content width: 1600px)
+   ========================================================================== */
+@media only screen
+and (min-width : 2000px) {
+
+    body {
+        margin-left:calc(50vw - 640px);
+        margin-right:calc(50vw - 960px);
+    }
+
+    .decoration {
+        width:270px;
+        height:100vh;
+        overflow:hidden;
+        left:calc(50vw - 960px);
+    }
+
+    .decorationImage {
+        width:270px;
+        height:270px;
+    }
+
+    header {
+        width:1600px;
+        height:250px;
+        line-height:250px;
+        font-size:5em;
+    }
+
+    footer {
+        width:1600px;
+    }
+
+    .buttonContainer {
+        width:1600px;
+    }
+
+    .button {
+        width:400px;
+        height:70px;
+        line-height:70px;
+        font-size:2em;
+        margin-bottom:70px;
+    }
+
+    .button:hover {
+        width:400px;
+        height:70px;
+        line-height:70px;
+        font-size:2em;
+    }
+
+    .tileContainer {
+        width:1000px;
+        height:1000px;
+        padding-left:0px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .tile {
+        margin:25px;
+        width:450px;
+        height:450px;
+        line-height:450px;
+        font-size:3em;
+    }
+
+    .tile:hover {
+        margin:25px;
+        width:450px;
+        height:450px;
+        line-height:450px;
+        font-size:3em;
+    }
+
+    .picturesContent {
+        width:1600px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .milestonesContent {
+        width:1600px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .suggestionsContent {
+        width:1600px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .videosContent {
+        width:1600px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+}

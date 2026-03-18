@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Cody Boys</title>
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/bkp.css">
+  </head>
+
+  <body>
+    <header><a href="index.html">The Cody Boys</a></header>
+    <aside id="decoration" class="decoration"></aside>
+
+    <ul class="buttonContainer">
+      <li><a class="button picturesButton selectedbutton" href="pictures.html">Pictures</a></li>
+      <li><a class="button videosButton" href="videos.html">Videos</a></li>
+      <li><a class="button milestonesButton" href="milestones.html">Milestones</a></li>
+      <li><a class="button suggestionsButton" href="suggestions.html">Suggestions</a></li>
+    </ul>
+
+    <div id="content" class="picturesContent">
+      <nav class="navigator">
+        <span class="selectedpage">Classic</span> |
+        <a id="pictureframelink" href="pictureFrame.html">Picture Frame</a>
+      </nav>
+
+      <div id="kidpics"></div>
+    </div>
+
+    <footer>Copyright &copy; 2010-2026 <a href="https://briancody.org">Brian Cody</a></footer>
+
+    <script src="js/BKPConstants.js"></script>
+    <script src="js/decoration.js"></script>
+    <script src="js/lightbox.js"></script>
+    <script src="js/albumBrowser.js"></script>
+    <script>
+      // Picture Frame link opens a popup window
+      document.getElementById("pictureframelink").addEventListener("click", function (e) {
+          var frameTitle = BKPConstants.appName + " Digital Picture Frame";
+          window.open("pictureFrame.html", frameTitle,
+                      "location=0,status=0,scrollbars=0,width=500,height=500");
+          e.preventDefault();
+      });
+    </script>
+  </body>
+</html>
