@@ -4,7 +4,6 @@
     "type": "project",
     "require": {
         "php": ">=7.4",
-        "vimeo/vimeo-api": "^4.0",
-        "google/apiclient": "^2.0"
+        "vimeo/vimeo-api": "^4.0"
     }
 }
