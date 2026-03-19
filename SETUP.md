@@ -24,10 +24,6 @@ composer install
 This creates a `vendor/` directory containing the Vimeo PHP SDK. You only need
 to do this once (and again if you update `composer.json`).
 
-Note: `composer.json` currently also requires `google/apiclient`, which is a
-leftover from the old Google Photos integration and is no longer used. It can
-be removed from `composer.json` to reduce install size.
-
 ---
 
 ## 3. Add Font Files

@@ -6,10 +6,6 @@
  */
 var BKPConstants = {
     appName: "NateWeb",
-    kidName: "Nate",
-    kidNames: "Nate and Finn",
-    rootDir: "boys",
-    googleUser: "brianrcody",
     startingYear: 2009,
     endingYear: 2016
 };

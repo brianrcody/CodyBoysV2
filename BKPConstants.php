@@ -19,24 +19,6 @@ class BKPConstants {
     const VIMEO_ALBUM_ID = 'YOUR_VIMEO_ALBUM_ID';
 
     // =========================================================================
-    // Google Photos Library API (OAuth 2.0)
-    // =========================================================================
-    // 1. Create a project at https://console.cloud.google.com/
-    // 2. Enable the "Photos Library API"
-    // 3. Create OAuth 2.0 credentials (Web application type)
-    // 4. Run the one-time authorization flow to obtain a refresh token
-    //    (see SETUP.md for instructions)
-
-    /** @var string Google OAuth 2.0 client ID */
-    const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
-
-    /** @var string Google OAuth 2.0 client secret */
-    const GOOGLE_CLIENT_SECRET = 'YOUR_GOOGLE_CLIENT_SECRET';
-
-    /** @var string Google OAuth 2.0 refresh token (obtained from one-time auth flow) */
-    const GOOGLE_REFRESH_TOKEN = 'YOUR_GOOGLE_REFRESH_TOKEN';
-
-    // =========================================================================
     // Email
     // =========================================================================
 
