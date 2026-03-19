@@ -33,7 +33,7 @@ A personal family photo/video website for Brian Cody, documenting sons Nate (bor
 ### JavaScript
 | File | Purpose |
 |---|---|
-| `js/BKPConstants.js` | Global config (appName, kidName, rootDir, startingYear) |
+| `js/BKPConstants.js` | Global config (appName, startingYear, endingYear) |
 | `js/decoration.js` | Fetches up to 10 random photos (one per album) and fills the sidebar strip |
 | `js/albumBrowser.js` | Two-level photo browser: year → album → photos |
 | `js/lightbox.js` | Custom lightbox image viewer with keyboard nav |
