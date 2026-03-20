@@ -32,7 +32,7 @@
         width:600px;
         height:100px;
         background-color:#ffffff;
-        text-align:left;
+        text-align:center;
         text-shadow: 1px 1px #ccccdd;
         line-height:100px;
         font-family: 'Raleway', sans-serif;
@@ -140,6 +140,7 @@
         display:block;
         float:left;
         font-family: 'Oswald', sans-serif;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -158,6 +159,7 @@
         font-size:2em;
         color:#ffffff;
         background-image:none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
 
     .picturesTile {
@@ -329,7 +331,7 @@ and (max-width:600px) {
     header {
         width:95%;
         height:50px;
-        text-align:left;
+        text-align:center;
         line-height:50px;
         font-size:2em;
         margin-top:25px;
