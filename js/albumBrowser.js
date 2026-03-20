@@ -15,7 +15,6 @@
     var photoCache = {};      // albumId -> photos array
     var albumListEl = null;   // the container holding all year sections
     var albumViewEl = null;   // the container for a single album's photos
-    var thumbnailSize = 270;
 
     var MONTH_NAMES = {
         january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -58,10 +57,6 @@
     function init() {
         var container = document.getElementById("kidpics");
         if (!container) return;
-
-        if (window.innerWidth < 600) {
-            thumbnailSize = 72;
-        }
 
         albumListEl = document.createElement("div");
         albumListEl.id = "album-list";
@@ -144,13 +139,10 @@
         img.src = encodeURI(album.coverUrl || "");
         img.alt = album.title;
         img.title = album.title;
-        img.width = thumbnailSize;
-        img.height = thumbnailSize;
-        img.style.objectFit = "cover";
+        img.className = "album-thumb";
 
         var titleDiv = document.createElement("div");
-        titleDiv.style.cssText =
-            "font-size:12pt; width:" + thumbnailSize + "px;";
+        titleDiv.className = "album-title";
         titleDiv.textContent = album.title;
 
         coverDiv.appendChild(img);
@@ -212,17 +204,10 @@
         albumViewEl.appendChild(title);
 
         var backDiv = document.createElement("div");
-        backDiv.style.cssText =
-            "float:left; margin-right:10px; margin-bottom:10px; width:" + thumbnailSize +
-            "px; height:" + thumbnailSize + "px; cursor:pointer;";
 
         var backInner = document.createElement("div");
         backInner.textContent = "Back";
-        backInner.style.cssText =
-            "border-style:outset; border-width:1px; text-align:center;" +
-            "width:" + (thumbnailSize - 2) + "px; height:" + (thumbnailSize - 2) + "px;" +
-            "line-height:" + thumbnailSize + "px; font-family:'Oswald',sans-serif;" +
-            "color:#1100aa; font-size:1.2em;";
+        backInner.className = "album-back-inner";
         backDiv.appendChild(backInner);
         backDiv.tabIndex = 0;
         backDiv.setAttribute("role", "button");
@@ -247,10 +232,7 @@
             var img = document.createElement("img");
             img.src = encodeURI(photo.thumbUrl);
             img.alt = photo.title || "";
-            img.width = thumbnailSize;
-            img.height = thumbnailSize;
-            img.style.objectFit = "cover";
-            img.style.borderWidth = "0px";
+            img.className = "album-thumb";
 
             a.appendChild(img);
 

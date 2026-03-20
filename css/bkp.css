@@ -280,6 +280,40 @@
         outline-offset: 3px;
     }
 
+    .album-thumb {
+        width: 186px;
+        height: 186px;
+        object-fit: cover;
+        display: block;
+        border-width: 0;
+    }
+
+    .album-title {
+        font-size: 12pt;
+        width: 186px;
+    }
+
+    .album-back-btn {
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        width: 186px;
+        height: 186px;
+        cursor: pointer;
+    }
+
+    .album-back-inner {
+        border-style: outset;
+        border-width: 1px;
+        text-align: center;
+        width: 184px;
+        height: 184px;
+        line-height: 186px;
+        font-family: 'Oswald', sans-serif;
+        color: #1100aa;
+        font-size: 1.2em;
+    }
+
 }
 
 /* ==========================================================================
@@ -418,6 +452,26 @@ and (max-width:600px) {
 
     #suggestionsinput {
         width:95%;
+    }
+
+    .album-thumb {
+        width: 72px;
+        height: 72px;
+    }
+
+    .album-title {
+        width: 72px;
+    }
+
+    .album-back-btn {
+        width: 72px;
+        height: 72px;
+    }
+
+    .album-back-inner {
+        width: 70px;
+        height: 70px;
+        line-height: 72px;
     }
 
 }
@@ -579,6 +633,26 @@ and (min-width : 1200px) {
         margin-left:auto;
         margin-right:auto;
     }
+
+    .album-thumb {
+        width: 256px;
+        height: 256px;
+    }
+
+    .album-title {
+        width: 256px;
+    }
+
+    .album-back-btn {
+        width: 256px;
+        height: 256px;
+    }
+
+    .album-back-inner {
+        width: 254px;
+        height: 254px;
+        line-height: 256px;
+    }
 }
 
 /* ==========================================================================
@@ -680,5 +754,25 @@ and (min-width : 2000px) {
         width:1600px;
         margin-left:auto;
         margin-right:auto;
+    }
+
+    .album-thumb {
+        width: 256px;
+        height: 256px;
+    }
+
+    .album-title {
+        width: 256px;
+    }
+
+    .album-back-btn {
+        width: 256px;
+        height: 256px;
+    }
+
+    .album-back-inner {
+        width: 254px;
+        height: 254px;
+        line-height: 256px;
     }
 }

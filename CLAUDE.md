@@ -155,12 +155,21 @@ Font files live in `/fonts/` as `.woff2` + `.ttf` pairs.
 
 ## Responsive Sizing Reference
 
-### Photo Thumbnails (`albumBrowser.js`)
-```
-≥1800px : 240px
-<600px  : 72px
-default : 144px
-```
+### Photo Thumbnails (`bkp.css` — `.album-thumb`)
+
+Thumbnail sizing is CSS-driven via the `.album-thumb` class. `albumBrowser.js` no longer sets
+`width` or `height` on thumbnail elements; the JS `thumbnailSize` variable has been removed.
+
+| Breakpoint | Content Width | Thumbnail Size | Target Columns |
+|---|---|---|---|
+| `≥2000px` | 1600px | 256px | 6 |
+| `≥1200px` | 800px | 256px | 3 |
+| `≥1024px` (base + sidebar) | 600px | 186px | 3 |
+| `<600px` (mobile) | 95% | 72px | 3+ |
+
+The same breakpoints also size `.album-title` (width), `.album-back-btn` (width + height), and
+`.album-back-inner` (width, height, line-height) to keep the back button tile consistent with
+photo and album-cover thumbnails.
 
 ### Video Player (`videoLoader.js` — `getPlayerSize()`)
 ```
