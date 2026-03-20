@@ -11,7 +11,7 @@ A lightweight, self-hosted web album. Photos are served from the local filesyste
 **Features:**
 - Two-level photo browser (year → album → photos) with lightbox viewer
 - Full-screen auto-cycling slideshow
-- Paginated Vimeo video picker with embedded player
+- Paginated Vimeo video picker with embedded player and keyword search
 - Developmental milestone tables
 - Responsive layout from mobile through 4K
 

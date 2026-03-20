@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/bkp.css">
-    <link rel="stylesheet" type="text/css" href="css/bkpVideos.css?v=2">
+    <link rel="stylesheet" type="text/css" href="css/bkpVideos.css?v=3">
   </head>
 
   <body>
@@ -22,6 +22,11 @@
     </ul>
 
     <div id="content" class="videosContent">
+      <div id="searchBox">
+        <input type="text" id="searchInput" placeholder="Search videos&hellip;">
+        <button id="searchButton">Search</button>
+      </div>
+      <div id="searchMessage"></div>
       <div id="skeletonTitle"  class="skeletonBar skeletonTitle"></div>
       <div id="skeletonPlayer" class="skeletonBox skeletonPlayer"></div>
       <div id="skeletonDesc"   class="skeletonDesc">
@@ -45,6 +50,6 @@
 
     <script src="js/BKPConstants.js"></script>
     <script src="js/decoration.js"></script>
-    <script src="js/videoLoader.js?v=2"></script>
+    <script src="js/videoLoader.js?v=3"></script>
   </body>
 </html>

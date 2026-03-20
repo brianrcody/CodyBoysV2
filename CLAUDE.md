@@ -15,7 +15,7 @@ A personal family photo/video website for Brian Cody, documenting sons Nate (bor
 |---|---|
 | `index.html` | Landing page — 2×2 navigation tile grid |
 | `pictures.html` | Photo album browser with lightbox |
-| `videos.html` | Vimeo video player + paginated picker |
+| `videos.html` | Vimeo video player + paginated picker with keyword search |
 | `milestones.html` | Static developmental milestone tables for both boys |
 | `pictureFrame.html` | Full-screen slideshow popup (opened by pictures.html) |
 | `suggestions.html` | Contact/feedback form |
@@ -38,7 +38,7 @@ A personal family photo/video website for Brian Cody, documenting sons Nate (bor
 | `js/albumBrowser.js` | Two-level photo browser: year → album → photos |
 | `js/lightbox.js` | Custom lightbox image viewer with keyboard nav |
 | `js/pictureFrame.js` | Auto-cycling slideshow (5-min intervals) |
-| `js/videoLoader.js` | Vimeo video loader + paginated picker UI |
+| `js/videoLoader.js` | Vimeo video loader + paginated picker UI + keyword search with eager load |
 
 ### PHP
 | File | Purpose |
@@ -92,7 +92,7 @@ All modules depend on `BKPConstants.js`, which must be loaded first. No ES6 modu
 | `albumBrowser.js` | `loadPhotos.php?action=albums` | All album metadata |
 | `albumBrowser.js` | `loadPhotos.php?action=photos&albumId=XXX` | Photos in one album |
 | `pictureFrame.js` | Both photo actions above | Slideshow data |
-| `videoLoader.js` | `loadVideos.php` (POST, `set=[page]`) | Paginated video list |
+| `videoLoader.js` | `loadVideos.php` (POST, `set=[page]`) | Lazy-loaded paginated video list; all remaining pages also fetched eagerly on search |
 | `videoLoader.js` | `https://vimeo.com/api/oembed.json` | Embed iframe for selected video |
 | `suggestions.html` | `suggestions.php` (form POST) | Send feedback email |
 
@@ -246,6 +246,30 @@ Album IDs are URL-safe slugs derived from the directory name (lowercase, non-alp
 
 ---
 
+## Video Search
+
+Search is implemented entirely client-side in `videoLoader.js`. `loadVideos.php` requires no changes.
+
+### Eager Load
+
+Focusing the search input triggers an eager load of all remaining server pages not yet fetched by lazy browsing. The load is represented as a single Promise (`eagerLoadPromise`) stored at module scope — created once on first focus and reused if the user submits before it completes. The submit handler awaits this Promise rather than restarting the load.
+
+Each page is inserted into `videos[]` at the offset computed from its explicit page number: `(pageNumber - 1) * numVideosPerPage`. This is independent of `currentSetLoad`, which remains solely the concern of the lazy-load pagination logic. Once all pages are received, `allVideosLoaded` is set to `true`; subsequent searches skip the loading phase entirely.
+
+### Filtering
+
+Queries are parsed into tokens: text in double quotes becomes a single exact-phrase token; unquoted words are split on whitespace. A video matches if every token appears (case-insensitive substring) in its `title` or `description`. Result order matches the original Vimeo sort (newest first) — no re-sorting is needed.
+
+### Picker in Search Mode
+
+`filteredVideos` (null in normal mode, an array in search mode) holds the matched subset. Each entry carries an explicit `absIndex` pointing into the full `videos[]` array so `loadVideo()` can look up the video directly regardless of filtering. `generateVideoPickerUI` and `generatePagePickerUI` are parameterized to accept an explicit video list and page count rather than reading module-level `numVideos`/`numPickerPages`, avoiding the need to mutate shared state when switching modes.
+
+### DOM State
+
+`#searchMessage` (below the search box) serves dual duty: "Loading videos…" during eager load (with an animated CSS spinner via `.loading::after`), and "No videos found for …" on empty results. `.title`, `.player`, `.description`, and `.picker` are hidden only in the no-results state.
+
+---
+
 ## Key Conventions
 
 - **No ES6 modules** — use `var`, plain functions, and IIFEs.
@@ -256,6 +280,7 @@ Album IDs are URL-safe slugs derived from the directory name (lowercase, non-alp
 - **Inline styles** via `element.style.cssText` for bulk programmatic styling.
 - **No retry logic** — single fetch attempt per request.
 - `photoCache = {}` in `albumBrowser.js` caches photos by albumId to avoid duplicate requests.
+- `eagerLoadPromise` in `videoLoader.js` is a module-level Promise created once on first search-input focus; the submit handler awaits it rather than restarting the load. `allVideosLoaded` gates both the focus trigger and the submit fast-path.
 
 ---
 
