@@ -233,7 +233,7 @@ Album IDs are URL-safe slugs derived from the directory name (lowercase, non-alp
 
 ### Decoration Strip Fill Behavior
 
-`decoration` returns up to 10 random photos (one per randomly chosen album). The JS in `decoration.js` repeats the sequence as needed to fill the full viewport height (`height: 100vh`). Images are sized 180×180px (standard) or 270×270px (2000px+ tier) and overflow is clipped.
+`decoration` returns up to 10 random photos (one per randomly chosen album). The JS in `decoration.js` always renders all 10 photos so they are available if the user resizes the window taller. Images are sized 180×180px (standard) or 270×270px (2000px+ tier) and overflow is clipped.
 
 ---
 
