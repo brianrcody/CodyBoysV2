@@ -4,9 +4,8 @@
  * Fetches 10 random photos (one per randomly selected album) from the photo
  * proxy and fills the #decoration aside. Only runs on viewports >= 1024px.
  *
- * Fill behavior: if 10 photos don't fill the available height, the sequence
- * repeats from the beginning until the strip is filled. Overflow is clipped
- * by CSS (height:100vh; overflow:hidden).
+ * All 10 photos are always rendered so they are available if the user resizes
+ * the window taller. Overflow is clipped by CSS (overflow:hidden).
  *
  * Fails silently on any error — the aside simply remains empty.
  */
@@ -37,15 +36,10 @@
 
                 var photos = data.photos;
 
-                // Determine per-image display size to calculate fill count
-                var imageSize = window.innerWidth >= 2000 ? 270 : 180;
-                var totalNeeded = Math.ceil(window.innerHeight / imageSize);
-
-                for (var i = 0; i < totalNeeded; i++) {
-                    var photo = photos[i % photos.length];
+                for (var i = 0; i < photos.length; i++) {
                     var img = document.createElement("img");
                     img.className = "decorationImage";
-                    img.src = encodeURI(photo.thumbUrl);
+                    img.src = encodeURI(photos[i].thumbUrl);
                     img.alt = "";
                     container.appendChild(img);
                 }
