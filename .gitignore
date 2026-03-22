@@ -16,11 +16,4 @@ videos.json
 get_refresh_token.php
 
 # Working documents
-GoogleCleanUp.md
-ChangesMadeForNewPicturesPage.md
-NewFunctionalDesignForPictures.md
-VideoLoadingAffordance.md
-PHOTO_BACKEND_IMPLEMENTATION.md
-ImprovedLayoutChanges.md
-NewVideoSearchFunctionalSpec.md
-FastVideoLoadAndSearch.md
+DesignDocs/
