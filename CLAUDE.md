@@ -38,16 +38,17 @@ A personal family photo/video website for Brian Cody, documenting sons Nate (bor
 | `js/albumBrowser.js` | Two-level photo browser: year → album → photos |
 | `js/lightbox.js` | Custom lightbox image viewer with keyboard nav |
 | `js/pictureFrame.js` | Auto-cycling slideshow (5-min intervals) |
-| `js/videoLoader.js` | Vimeo video loader + paginated picker UI + keyword search with eager load |
+| `js/videoLoader.js` | Fetches static video catalog (`videos.json`) and manages the picker UI + keyword search |
 
 ### PHP
 | File | Purpose |
 |---|---|
 | `BKPConstants.php` | Server-side config — Vimeo credentials and email address |
 | `loadPhotos.php` | Local filesystem photo proxy (3 actions: decoration, albums, photos) |
-| `loadVideos.php` | Vimeo API v3 proxy (paginated) |
+| `loadVideos.php` | Vimeo API v3 proxy (paginated) — no longer called at runtime; retained as reference |
 | `suggestions.php` | Email handler for feedback form |
 | `processPhotos.php` | CLI tool — generates `display/` and `thumb/` images from source files |
+| `refreshVideos.php` | CLI tool — fetches full Vimeo catalog and writes `videos.json` |
 
 ### Docs
 | File | Purpose |
@@ -92,7 +93,7 @@ All modules depend on `BKPConstants.js`, which must be loaded first. No ES6 modu
 | `albumBrowser.js` | `loadPhotos.php?action=albums` | All album metadata |
 | `albumBrowser.js` | `loadPhotos.php?action=photos&albumId=XXX` | Photos in one album |
 | `pictureFrame.js` | Both photo actions above | Slideshow data |
-| `videoLoader.js` | `loadVideos.php` (POST, `set=[page]`) | Lazy-loaded paginated video list; all remaining pages also fetched eagerly on search |
+| `videoLoader.js` | `videos.json` (GET, static file) | Full video catalog on init |
 | `videoLoader.js` | `https://vimeo.com/api/oembed.json` | Embed iframe for selected video |
 | `suggestions.html` | `suggestions.php` (form POST) | Send feedback email |
 
@@ -242,19 +243,27 @@ Album IDs are URL-safe slugs derived from the directory name (lowercase, non-alp
 **Authentication:** Personal access token (read-only), stored in `BKPConstants.php`.
 **Endpoint:** `GET /me/albums/{VIMEO_ALBUM_ID}/videos`
 **Sort:** By date, descending (newest first).
-**Pagination:** 50 videos per server-side page; UI shows 5 thumbnails per picker page.
+**Pagination:** 50 videos per page — used by `refreshVideos.php` during catalog generation. The frontend no longer paginates; it loads the full catalog from `videos.json` in one fetch.
+
+### Updating the Video Catalog
+
+After adding videos to Vimeo, SSH to the server and run:
+
+```bash
+php refreshVideos.php
+```
+
+This rewrites `videos.json` in the web root. No other deployment step is needed.
 
 ---
 
 ## Video Search
 
-Search is implemented entirely client-side in `videoLoader.js`. `loadVideos.php` requires no changes.
+Search is implemented entirely client-side in `videoLoader.js`. The full catalog is available in memory after the initial `videos.json` fetch, so search requires no additional network requests.
 
-### Eager Load
+### Load State
 
-Focusing the search input triggers an eager load of all remaining server pages not yet fetched by lazy browsing. The load is represented as a single Promise (`eagerLoadPromise`) stored at module scope — created once on first focus and reused if the user submits before it completes. The submit handler awaits this Promise rather than restarting the load.
-
-Each page is inserted into `videos[]` at the offset computed from its explicit page number: `(pageNumber - 1) * numVideosPerPage`. This is independent of `currentSetLoad`, which remains solely the concern of the lazy-load pagination logic. Once all pages are received, `allVideosLoaded` is set to `true`; subsequent searches skip the loading phase entirely.
+`loadPromise` (module-level) holds the `fetch('videos.json')` Promise created in `init()`. `allVideosLoaded` is set to `true` once the fetch resolves and `videos[]` is populated. `handleSearch()` checks `allVideosLoaded` first and proceeds directly to filter; in the unlikely event the user submits before the fetch completes, it awaits `loadPromise` and shows a loading spinner.
 
 ### Filtering
 
@@ -280,7 +289,7 @@ Queries are parsed into tokens: text in double quotes becomes a single exact-phr
 - **Inline styles** via `element.style.cssText` for bulk programmatic styling.
 - **No retry logic** — single fetch attempt per request.
 - `photoCache = {}` in `albumBrowser.js` caches photos by albumId to avoid duplicate requests.
-- `eagerLoadPromise` in `videoLoader.js` is a module-level Promise created once on first search-input focus; the submit handler awaits it rather than restarting the load. `allVideosLoaded` gates both the focus trigger and the submit fast-path.
+- `loadPromise` in `videoLoader.js` is the `fetch('videos.json')` Promise created in `init()`; `allVideosLoaded` is set to `true` when it resolves. The submit handler checks `allVideosLoaded` first and only falls back to awaiting `loadPromise` if the fetch hasn't completed.
 
 ---
 
@@ -305,6 +314,7 @@ The following files are not in the repository and must be provided separately:
 - `/NateILoveYouDaddy.m4a`
 - `/vendor/` (run `composer install` — only Vimeo SDK is actively used)
 - Vimeo credentials filled into `BKPConstants.php`
+- `videos.json` generated by running `php refreshVideos.php`
 - `photos/albums/` directory tree with source images
 - `display/` and `thumb/` subdirectories generated by `processPhotos.php`
 
@@ -322,5 +332,5 @@ The following files are not in the repository and must be provided separately:
 
 - `BKPConstants.php` contains Vimeo credentials — PHP must execute it, not serve it as text.
 - `vendor/` should be blocked from direct web access.
-- `processPhotos.php` is CLI-only and will return HTTP 403 if accessed via a browser.
+- `processPhotos.php` and `refreshVideos.php` are CLI-only and will return HTTP 403 if accessed via a browser.
 - `suggestions.php` validates the `from` email address including DNS check, but `body` is passed directly to PHP `mail()` — keep this in mind if extending the form.

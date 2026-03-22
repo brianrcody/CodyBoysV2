@@ -1,8 +1,8 @@
 /**
- * Video loader — replaces the Dojo-based VideoLoader.
+ * Video loader — fetches the static video catalog and manages the video picker UI.
  *
- * Loads videos from loadVideos.php and manages the video picker UI.
- * Responsive player sizing per NUANCES.md (compiled layer values):
+ * Loads all videos from videos.json on init (single fetch, no pagination).
+ * Responsive player sizing:
  *   >= 2000px: 1280x720
  *   >= 1200px: 800x600
  *   >= 1024px: 600x450
@@ -15,23 +15,20 @@
 (function () {
     "use strict";
 
-    // Server data
-    var numVideosPerPage = 50;
-    var numVideos = -1;
-
     // Picker UI data
     var numVideosInPicker = 5;
+    var numVideos = -1;
     var numPickerPages = -1;
 
     // Video data
     var videos = [];
-    var currentSetLoad = 1;
 
-    // Search / eager-load state
+    // Load state — true once videos.json has been fully parsed
     var allVideosLoaded = false;
-    var eagerLoadPromise = null;
+    var loadPromise = null;
+
+    // Search state
     var filteredVideos = null;   // null = normal mode; array = active search results
-    var initialLoadPromise = null;
 
     /**
      * Get responsive player dimensions.
@@ -49,104 +46,6 @@
      */
     function getNumVisiblePickerPages() {
         return (window.innerWidth >= 600) ? 10 : 5;
-    }
-
-    // ── Data fetching ────────────────────────────────────────────────────────
-
-    /**
-     * Store the returned video page data.
-     * @param {Object} pageVideos - response from loadVideos.php.
-     * @param {number} pageNumber - 1-based page number, used to compute insert offset.
-     */
-    function handleVideoRequest(pageVideos, pageNumber) {
-        var videoIndex = (pageNumber - 1) * numVideosPerPage;
-        if (numVideos === -1) {
-            numVideos = pageVideos.numVideosTotal;
-            numPickerPages = Math.ceil(numVideos / numVideosInPicker);
-            if (numVideos <= numVideosPerPage) {
-                allVideosLoaded = true;
-            }
-        }
-        for (var i = 0; i < pageVideos.numVideosPage; i++) {
-            videos[videoIndex++] = pageVideos.videos[i];
-        }
-        document.body.style.cursor = "default";
-    }
-
-    /**
-     * Fetch a single page of videos (Promise-based, for eager load).
-     * @param {number} pageNumber - 1-based server page number.
-     * @returns {Promise}
-     */
-    function fetchPage(pageNumber) {
-        var formData = new FormData();
-        formData.append("set", pageNumber);
-        return fetch("loadVideos.php", { method: "POST", body: formData })
-            .then(function (response) {
-                if (!response.ok) throw new Error("HTTP " + response.status);
-                return response.json();
-            })
-            .then(function (pageVideos) {
-                handleVideoRequest(pageVideos, pageNumber);
-            });
-    }
-
-    /**
-     * Request a page of videos (callback-based, for lazy-load pagination).
-     * @param {number} set - 1-based server page number.
-     * @param {Function} callback - called after the page is stored.
-     */
-    function requestVideos(set, callback) {
-        document.body.style.cursor = "wait";
-        var formData = new FormData();
-        formData.append("set", set);
-        fetch("loadVideos.php", { method: "POST", body: formData })
-            .then(function (response) {
-                if (!response.ok) throw new Error("HTTP " + response.status);
-                return response.json();
-            })
-            .then(function (pageVideos) {
-                handleVideoRequest(pageVideos, set);
-                callback();
-            })
-            .catch(function (error) {
-                document.body.style.cursor = "default";
-                console.error("Error loading videos:", error);
-            });
-    }
-
-    /**
-     * Start the eager load of all remaining server pages, if not already started.
-     * Creates eagerLoadPromise on first call; subsequent calls return the same Promise.
-     * The submit handler awaits this Promise before filtering — it does not restart the load.
-     * @returns {Promise}
-     */
-    function startEagerLoad() {
-        if (allVideosLoaded) return Promise.resolve();
-        if (eagerLoadPromise) return eagerLoadPromise;
-
-        eagerLoadPromise = initialLoadPromise.then(function () {
-            if (allVideosLoaded) return;
-
-            var numServerPages = Math.ceil(numVideos / numVideosPerPage);
-            var startPage = currentSetLoad + 1;
-
-            if (startPage > numServerPages) {
-                allVideosLoaded = true;
-                return;
-            }
-
-            // Fetch remaining pages sequentially; each response is merged at its correct offset.
-            var chain = Promise.resolve();
-            for (var p = startPage; p <= numServerPages; p++) {
-                (function (pageNum) {
-                    chain = chain.then(function () { return fetchPage(pageNum); });
-                })(p);
-            }
-            return chain.then(function () { allVideosLoaded = true; });
-        });
-
-        return eagerLoadPromise;
     }
 
     // ── Player ───────────────────────────────────────────────────────────────
@@ -299,26 +198,14 @@
             });
         }
 
-        // Following pages click handler
+        // Following pages click handler — all data is in memory, no fetch needed
         var followingEl = pickerEl.querySelector('[data-action="following"]');
         if (followingEl) {
             followingEl.addEventListener("click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var bp = Number(this.getAttribute("data-page"));
-                var numVisiblePickerPages = getNumVisiblePickerPages();
-
-                // In search mode or when the full list is loaded, no lazy fetch is needed.
-                if (filteredVideos !== null || allVideosLoaded) {
-                    loadPicker(bp);
-                } else if (Math.floor(bp / numVisiblePickerPages) === currentSetLoad) {
-                    currentSetLoad++;
-                    requestVideos(currentSetLoad, function () {
-                        loadPicker(bp);
-                    });
-                } else {
-                    loadPicker(bp);
-                }
+                loadPicker(bp);
             });
         }
 
@@ -450,13 +337,11 @@
             return;
         }
 
-        // Eager load is in progress or hasn't started yet — show loading state and wait.
+        // Defensive: videos.json fetch not yet complete — show loading state and wait.
         setInputEnabled(false);
         showSearchMessage("Loading videos\u2026", true);
 
-        var promise = eagerLoadPromise || startEagerLoad();
-
-        promise.then(function () {
+        loadPromise.then(function () {
             setInputEnabled(true);
             hideSearchMessage();
             executeSearch(term);
@@ -535,21 +420,27 @@
      * Initialize the video page.
      */
     function init() {
-        initialLoadPromise = new Promise(function (resolve) {
-            requestVideos(currentSetLoad, function () {
+        loadPromise = fetch("videos.json")
+            .then(function (response) {
+                if (!response.ok) throw new Error("HTTP " + response.status);
+                return response.json();
+            })
+            .then(function (data) {
+                videos = data.videos;
+                numVideos = videos.length;
+                numPickerPages = Math.ceil(numVideos / numVideosInPicker);
+                allVideosLoaded = true;
                 loadVideo(0);
                 loadPicker(0);
-                resolve();
+            })
+            .catch(function (error) {
+                console.error("Error loading videos.json:", error);
             });
-        });
 
         var inputEl = document.getElementById("searchInput");
         var buttonEl = document.getElementById("searchButton");
 
         if (inputEl) {
-            inputEl.addEventListener("focus", function () {
-                startEagerLoad();
-            });
             inputEl.addEventListener("keydown", function (e) {
                 if (e.key === "Enter") handleSearch();
             });
