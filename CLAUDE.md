@@ -273,6 +273,27 @@ Queries are parsed into tokens: text in double quotes becomes a single exact-phr
 
 `filteredVideos` (null in normal mode, an array in search mode) holds the matched subset. Each entry carries an explicit `absIndex` pointing into the full `videos[]` array so `loadVideo()` can look up the video directly regardless of filtering. `generateVideoPickerUI` and `generatePagePickerUI` are parameterized to accept an explicit video list and page count rather than reading module-level `numVideos`/`numPickerPages`, avoiding the need to mutate shared state when switching modes.
 
+### Clear Button
+
+A `×` button (`<button class="search-clear-btn">`) sits inside the search input composite, absolutely positioned over the input's right interior. It is visible whenever the input contains text (shown/hidden via the `hidden` attribute, toggled by an `input` event listener). A `searchIsActive` boolean tracks whether a search filter is currently applied. The clear button's click handler has two branches:
+
+- **No active search** (user typed but didn't submit): clears the input and returns focus.
+- **Active search**: clears the input and calls `clearSearch()`, which resets `filteredVideos` to `null`, restores full picker and player, and sets `searchIsActive = false`.
+
+The button is disabled in sync with the input during the loading state. Empty input + Enter still works as a keyboard-only clear gesture.
+
+### Search Box DOM Structure
+
+```html
+<div id="searchBox">
+  <div class="search-input-wrapper">         <!-- position: relative; display: flex; width: 300px -->
+    <input type="text" id="searchInput">
+    <button class="search-clear-btn" hidden> <!-- position: absolute; floats over input interior -->
+    <button id="searchButton">Search</button>
+  </div>
+</div>
+```
+
 ### DOM State
 
 `#searchMessage` (below the search box) serves dual duty: "Loading videos…" during eager load (with an animated CSS spinner via `.loading::after`), and "No videos found for …" on empty results. `.title`, `.player`, `.description`, and `.picker` are hidden only in the no-results state.
@@ -290,6 +311,7 @@ Queries are parsed into tokens: text in double quotes becomes a single exact-phr
 - **No retry logic** — single fetch attempt per request.
 - `photoCache = {}` in `albumBrowser.js` caches photos by albumId to avoid duplicate requests.
 - `loadPromise` in `videoLoader.js` is the `fetch('videos.json')` Promise created in `init()`; `allVideosLoaded` is set to `true` when it resolves. The submit handler checks `allVideosLoaded` first and only falls back to awaiting `loadPromise` if the fetch hasn't completed.
+- `searchIsActive` in `videoLoader.js` is `true` whenever a search filter is in effect (including the no-results state). Set to `true` at the top of `executeSearch`, `false` in `clearSearch`. Governs the clear button's two-branch behavior.
 
 ---
 

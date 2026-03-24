@@ -29,6 +29,7 @@
 
     // Search state
     var filteredVideos = null;   // null = normal mode; array = active search results
+    var searchIsActive = false;  // true while a search filter (or no-results state) is in effect
 
     /**
      * Get responsive player dimensions.
@@ -288,6 +289,7 @@
      * @param {string} term - raw search string from the input.
      */
     function executeSearch(term) {
+        searchIsActive = true;
         var tokens = parseQuery(term);
         var results = [];
         for (var i = 0; i < videos.length; i++) {
@@ -312,6 +314,7 @@
      * Clear an active search and return to normal browse mode.
      */
     function clearSearch() {
+        searchIsActive = false;
         filteredVideos = null;
         hideSearchMessage();
         setContentVisible(true);
@@ -392,8 +395,10 @@
     function setInputEnabled(enabled) {
         var inputEl = document.getElementById("searchInput");
         var buttonEl = document.getElementById("searchButton");
+        var clearBtnEl = document.querySelector(".search-clear-btn");
         if (inputEl) inputEl.disabled = !enabled;
         if (buttonEl) buttonEl.disabled = !enabled;
+        if (clearBtnEl) clearBtnEl.disabled = !enabled;
     }
 
     /**
@@ -439,10 +444,27 @@
 
         var inputEl = document.getElementById("searchInput");
         var buttonEl = document.getElementById("searchButton");
+        var clearBtnEl = document.querySelector(".search-clear-btn");
 
         if (inputEl) {
+            inputEl.addEventListener("input", function () {
+                var hasText = inputEl.value.length > 0;
+                if (clearBtnEl) clearBtnEl.hidden = !hasText;
+                inputEl.classList.toggle("has-clear", hasText);
+            });
             inputEl.addEventListener("keydown", function (e) {
                 if (e.key === "Enter") handleSearch();
+            });
+        }
+        if (clearBtnEl) {
+            clearBtnEl.addEventListener("click", function () {
+                inputEl.value = "";
+                inputEl.classList.remove("has-clear");
+                clearBtnEl.hidden = true;
+                if (searchIsActive) {
+                    clearSearch();
+                }
+                inputEl.focus();
             });
         }
         if (buttonEl) {

@@ -23,8 +23,11 @@
 
     <div id="content" class="videosContent">
       <div id="searchBox">
-        <input type="text" id="searchInput" placeholder="Search videos&hellip;">
-        <button id="searchButton">Search</button>
+        <div class="search-input-wrapper">
+          <input type="text" id="searchInput" placeholder="Search videos&hellip;">
+          <button class="search-clear-btn" aria-label="Clear search" hidden>&#x2715;</button>
+          <button id="searchButton">Search</button>
+        </div>
       </div>
       <div id="searchMessage"></div>
       <div id="skeletonTitle"  class="skeletonBar skeletonTitle"></div>
