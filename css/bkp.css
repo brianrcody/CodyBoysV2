@@ -206,6 +206,10 @@
         opacity: 0.8;
     }
 
+    #content {
+        padding-top:25px;
+    }
+
     .picturesContent {
         width:600px;
         margin-bottom:50px;
@@ -421,10 +425,6 @@ and (max-width:600px) {
         background-image:linear-gradient(to bottom, #ff8800, #ff8800),linear-gradient(to bottom, #ff8800, #ff8800);
     }
 
-    #content {
-        margin-top:25px;
-    }
-
     .picturesContent {
         width:95%;
         padding-left:2.5%;
@@ -532,7 +532,6 @@ and (min-width : 1024px) {
 
     .picturesContent {
         width:600px;
-        padding-top:25px;
         padding-left:0px;
         margin-left:auto;
         margin-right:auto;
@@ -540,7 +539,6 @@ and (min-width : 1024px) {
 
     .milestonesContent {
         width:600px;
-        padding-top:25px;
         padding-left:0px;
         margin-left:auto;
         margin-right:auto;
@@ -548,7 +546,6 @@ and (min-width : 1024px) {
 
     .suggestionsContent {
         width:600px;
-        padding-top:25px;
         padding-left:0px;
         padding-bottom:25px;
         margin-left:auto;
@@ -557,7 +554,6 @@ and (min-width : 1024px) {
 
     .videosContent {
         width:600px;
-        padding-top:25px;
         padding-left:0px;
         margin-left:auto;
         margin-right:auto;
@@ -605,7 +601,6 @@ and (min-width : 1200px) {
 
     .picturesContent {
         width:800px;
-        padding-top:25px;
         padding-left:0px;
         margin-left:auto;
         margin-right:auto;
@@ -613,7 +608,6 @@ and (min-width : 1200px) {
 
     .milestonesContent {
         width:800px;
-        padding-top:25px;
         padding-left:0px;
         margin-left:auto;
         margin-right:auto;
@@ -621,7 +615,6 @@ and (min-width : 1200px) {
 
     .suggestionsContent {
         width:800px;
-        padding-top:25px;
         padding-left:0px;
         padding-bottom:25px;
         margin-left:auto;
@@ -630,7 +623,6 @@ and (min-width : 1200px) {
 
     .videosContent {
         width:800px;
-        padding-top:25px;
         padding-left:0px;
         margin-left:auto;
         margin-right:auto;
