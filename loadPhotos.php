@@ -16,7 +16,7 @@
 define('ALBUMS_DIR', __DIR__ . '/photos/albums');
 define('ALBUMS_URL', 'photos/albums');
 define('STARTING_YEAR', 2009);
-define('ENDING_YEAR',   2016);
+define('ENDING_YEAR',   2026);
 
 header('Content-Type: application/json');
 
