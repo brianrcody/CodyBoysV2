@@ -7,6 +7,10 @@
  *   Level 2: Photo thumbnail grid for a single album, with Back button.
  *
  * Album data is cached in memory so revisiting an album does not re-fetch.
+ * Browser Back/Forward is supported via the History API: opening an album
+ * pushes a state entry; the UI Back button delegates to history.back() so
+ * the two code paths stay in sync through the popstate handler.
+ *
  * Depends on: BKPConstants (global), Lightbox (global), loadPhotos.php (server)
  */
 (function () {
@@ -15,6 +19,7 @@
     var photoCache = {};      // albumId -> photos array
     var albumListEl = null;   // the container holding all year sections
     var albumViewEl = null;   // the container for a single album's photos
+    var savedScrollY = 0;     // scroll position when an album was opened
 
     var MONTH_NAMES = {
         january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
@@ -68,6 +73,10 @@
         container.appendChild(albumListEl);
         container.appendChild(albumViewEl);
 
+        // Establish baseline history state so Back from album view returns here.
+        history.replaceState({ view: "list", scrollY: 0 }, "");
+        window.addEventListener("popstate", onPopState);
+
         var startingYear = BKPConstants.startingYear;
         var endingYear = BKPConstants.endingYear;
 
@@ -104,6 +113,19 @@
             .catch(function () {
                 showError("An error occurred while loading albums.");
             });
+    }
+
+    /**
+     * Handle browser Back/Forward navigation.
+     */
+    function onPopState(e) {
+        var state = e.state;
+        if (!state || state.view === "list") {
+            savedScrollY = (state && state.scrollY) || 0;
+            closeAlbumView();
+        } else if (state.view === "album") {
+            openAlbum(state.albumId, state.albumTitle, false);
+        }
     }
 
     /**
@@ -153,7 +175,7 @@
         coverDiv.setAttribute("aria-label", album.title);
         coverDiv.className = "album-cover-btn";
 
-        function activateAlbum() { openAlbum(album.id, album.title); }
+        function activateAlbum() { openAlbum(album.id, album.title, true); }
         coverDiv.addEventListener("click", activateAlbum);
         coverDiv.addEventListener("keydown", function (e) {
             if (e.key === "Enter" || e.key === " ") {
@@ -167,8 +189,17 @@
 
     /**
      * Open an album: hide the album list, show photo thumbnails.
+     * @param {boolean} pushHistory  true for user-initiated navigation; false
+     *                               when called from the popstate handler.
      */
-    function openAlbum(albumId, albumTitle) {
+    function openAlbum(albumId, albumTitle, pushHistory) {
+        if (pushHistory) {
+            savedScrollY = window.scrollY;
+            // Stamp the current scroll into the list state before pushing forward.
+            history.replaceState({ view: "list", scrollY: savedScrollY }, "");
+            history.pushState({ view: "album", albumId: albumId, albumTitle: albumTitle }, "");
+        }
+
         if (photoCache[albumId]) {
             renderAlbumView(albumId, albumTitle, photoCache[albumId]);
             return;
@@ -214,11 +245,13 @@
         backDiv.setAttribute("aria-label", "Back to albums");
         backDiv.className = "album-back-btn";
 
-        backDiv.addEventListener("click", closeAlbumView);
+        // Delegate to history.back() so the popstate handler drives the actual
+        // view switch — keeps UI Back and browser Back on the same code path.
+        backDiv.addEventListener("click", function () { history.back(); });
         backDiv.addEventListener("keydown", function (e) {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                closeAlbumView();
+                history.back();
             }
         });
         albumViewEl.appendChild(backDiv);
@@ -264,6 +297,7 @@
     function closeAlbumView() {
         albumViewEl.style.display = "none";
         albumListEl.style.display = "block";
+        window.scrollTo(0, savedScrollY);
     }
 
     if (document.readyState === "loading") {

@@ -310,6 +310,7 @@ The button is disabled in sync with the input during the loading state. Empty in
 - **Inline styles** via `element.style.cssText` for bulk programmatic styling.
 - **No retry logic** — single fetch attempt per request.
 - `photoCache = {}` in `albumBrowser.js` caches photos by albumId to avoid duplicate requests.
+- **History API in `albumBrowser.js`** — opening an album pushes a state entry (`{ view: "album", albumId, albumTitle }`); the list baseline is `{ view: "list", scrollY }`. The UI Back button calls `history.back()`; `popstate` is the single handler that drives all view switches. `openAlbum` takes a `pushHistory` boolean — `true` for user clicks, `false` when called from `popstate` to avoid double-pushing.
 - `loadPromise` in `videoLoader.js` is the `fetch('videos.json')` Promise created in `init()`; `allVideosLoaded` is set to `true` when it resolves. The submit handler checks `allVideosLoaded` first and only falls back to awaiting `loadPromise` if the fetch hasn't completed.
 - `searchIsActive` in `videoLoader.js` is `true` whenever a search filter is in effect (including the no-results state). Set to `true` at the top of `executeSearch`, `false` in `clearSearch`. Governs the clear button's two-branch behavior.
 
