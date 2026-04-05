@@ -49,6 +49,7 @@ A personal family photo/video website for Brian Cody, documenting sons Nate (bor
 | `suggestions.php` | Email handler for feedback form |
 | `processPhotos.php` | CLI tool — generates `display/` and `thumb/` images from source files |
 | `refreshVideos.php` | CLI tool — fetches full Vimeo catalog and writes `videos.json` |
+| `refreshAndSortVideos.php` | CLI tool — same as above, but sorts videos by description date (newest first) before writing `videos.json` |
 
 ### Docs
 | File | Purpose |
