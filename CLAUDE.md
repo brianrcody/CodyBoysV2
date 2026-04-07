@@ -51,6 +51,19 @@ A personal family photo/video website for Brian Cody, documenting sons Nate (bor
 | `refreshVideos.php` | CLI tool — fetches full Vimeo catalog and writes `videos.json` |
 | `refreshAndSortVideos.php` | CLI tool — same as above, but sorts videos by description date (newest first) before writing `videos.json` |
 
+### Local Scripts (`localScripts/`)
+Scripts for importing photos from iCloud on the local machine — not deployed to the server.
+
+| File | Purpose |
+|---|---|
+| `download-icloud-album.sh` | Downloads a named iCloud album via `icloudpd` into the current directory |
+| `convert-heic.sh` | Converts all `.HEIC` files under the current directory to `.jpg` |
+| `convert_heic.py` | Python worker called by `convert-heic.sh`; uses Pillow + pillow-heif |
+| `reorganize-icloud-photos.sh` | Flattens `YYYY/MM/DD/file` tree into `"Nate and Finn, Month YYYY"` directories |
+| `ICLOUD_WORKFLOW.md` | Full setup and usage guide for the iCloud import workflow |
+
+See `localScripts/ICLOUD_WORKFLOW.md` for setup instructions, system requirements, and step-by-step usage.
+
 ### Docs
 | File | Purpose |
 |---|---|
