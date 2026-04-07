@@ -92,7 +92,7 @@
 
             var yearAlbums = document.createElement("div");
             yearAlbums.id = "albums-" + year;
-            yearAlbums.style.overflow = "hidden";
+            yearAlbums.style.cssText = "display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px;";
             yearSection.appendChild(yearAlbums);
 
             albumListEl.appendChild(yearSection);
@@ -154,8 +154,7 @@
      */
     function appendAlbumCover(container, album) {
         var coverDiv = document.createElement("div");
-        coverDiv.style.cssText =
-            "float:left; margin-right:10px; margin-bottom:10px; cursor:pointer;";
+        coverDiv.style.cssText = "cursor:pointer;";
 
         var img = document.createElement("img");
         img.src = encodeURI(album.coverUrl || "");
